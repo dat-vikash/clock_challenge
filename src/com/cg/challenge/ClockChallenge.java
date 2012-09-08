@@ -23,14 +23,11 @@ import edu.cmu.sphinx.result.Result;
 public class ClockChallenge {
 
     public static void main(String[] args) {
-        ConfigurationManager cm;
 
-        if (args.length > 0) {
-            cm = new ConfigurationManager(args[0]);
-        } else {
-            cm = new ConfigurationManager(ClockChallenge.class.getResource("helloworld.config.xml"));
-        }
+        //create a configuration manager to aide in system device lookup
+        ConfigurationManager cm = new ConfigurationManager(ClockChallenge.class.getResource("clockchallenge.config.xml"));
 
+        //get a speech recognizer instance (in this case cmu.sphinx4)
         Recognizer recognizer = (Recognizer) cm.lookup("recognizer");
         recognizer.allocate();
 
@@ -42,7 +39,7 @@ public class ClockChallenge {
             System.exit(1);
         }
 
-        System.out.println("Say: (Good morning | Hello) ( Bhiksha | Evandro | Paul | Philip | Rita | Will )");
+        System.out.println("Say: (What time is it | remind me in x minutes |  what is the temp )");
 
         // loop the recognition until the programm exits.
         while (true) {
@@ -52,11 +49,17 @@ public class ClockChallenge {
 
             if (result != null) {
                 String resultText = result.getBestFinalResultNoFiller();
-//                System.out.println("You said: " + resultText + '\n');
-                if (resultText.equals("")) {
+                if (resultText.equals("what time is it")) {
+                System.out.println("You said: " + resultText + '\n');
+
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 System.out.println(dateFormat.format(date));
+                }else if (resultText.equals("remind me in ")){
+                    //
+                }
+                else if (resultText.equals("what is the temp")){
+                       //
                 }
 
             } else {
@@ -65,50 +68,3 @@ public class ClockChallenge {
         }
     }
 }
-
-
-//public class ClockChallenge extends ResultAdapter{
-//    static Recognizer rec;
-//
-//    //Recieve RESULT_ACCEPTED event
-//    public void resultAccepted(ResultEvent e){
-//        Result r = (Result)(e.getSource());
-//        ResultToken tokens[] = r.getBestTokens();
-//
-//        for(int i=0; i < tokens.length; i++){
-//            System.out.println(tokens[i].getSpokenText() + " ");
-//        }
-//
-//        //deallocate the recognizer
-//        try {
-//            rec.deallocate();
-//        } catch (EngineException e1) {
-//            e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
-//    }
-//
-//    public static void main(String args[]){
-//        try{
-//             RecognizerModeDesc desc;
-//            desc = new RecognizerModeDesc(Locale.ENGLISH);
-//            EngineList list = Central.availableRecognizers(desc);
-//            System.out.println(list);
-//            //create a recognizer
-//            rec = Central.createRecognizer(new EngineModeDesc(Locale.ENGLISH));
-//            rec.allocate();
-//
-//            FileReader reader = new FileReader("what_time.gram");
-//            RuleGrammar gram = rec.loadJSGF(reader);
-//            gram.setEnabled(true);
-//
-//            rec.addResultListener(new ClockChallenge());
-//            rec.commitChanges();
-//
-//            rec.requestFocus();
-//            rec.resume();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-//
-//}
