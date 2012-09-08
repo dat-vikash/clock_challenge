@@ -3,6 +3,7 @@ CG Clock Challenge
 
 REQUIREMENTS
 -------------
+
 To run:
    java1.6 jre
 
