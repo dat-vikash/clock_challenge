@@ -135,6 +135,9 @@ public class ClockChallenge {
 
 
     public static void main(String[] args) {
+        //set the freetts voices explicitly so javax.speech.Central doesn't need to lookup the
+        //speech.properties file.
+        System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
         //setup date and time format
         DateFormat dateFormat = new SimpleDateFormat("h:mm a");
 
