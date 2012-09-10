@@ -18,4 +18,8 @@ Commands:
 -----------
 -Run:
   java -jar clock_challenge_java.jar
+  
+  
+If the above command errors out please copy the speech.properties file into the locations outputed.
+  
 
